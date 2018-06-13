@@ -12,6 +12,7 @@ class User < ApplicationRecord
       user.full_name = auth['info']['name']
     end
   end
+
   def save_repositories!
     client = Octokit::Client.new access_token: oauth_token
     repos = client.repositories(name, per_page: 100)

@@ -9,7 +9,14 @@ class WelcomeController < ApplicationController
   end
   def show
     @user = User.find(params[:id])
-    # @client = Octokit::Client.new(:access_token => @user.oauth_token)
+    @client = Octokit::Client.new(:access_token => @user.oauth_token)
+    langs = @user.repositories.map { |repo| repo.language.name }.compact
+    lang_hash = {}
+    langs.each do |lang|
+      count = langs.count(lang)
+      lang_hash[lang] = count
+    end
+    @chart_data = lang_hash
   end
 
   private
